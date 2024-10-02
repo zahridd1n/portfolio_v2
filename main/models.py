@@ -6,22 +6,23 @@ class AboutMe(models.Model):
     region = models.CharField(max_length=255, verbose_name='region')
     city = models.CharField(max_length=255, verbose_name='city')
     age = models.IntegerField(verbose_name='age')
-    profession = models.TextField(verbose_name='profession')
+    profession = models.CharField(max_length=122, verbose_name='profession')
     phone = models.CharField(max_length=255, verbose_name='phone')
     email = models.EmailField(verbose_name='email')
-    address = models.TextField(verbose_name='address')
+    address = models.TextField(verbose_name='address', null=True, blank=True)
 
     def __str__(self):
         return self.full_name
 
 
-class  SocialMedia(models.Model):
+class SocialMedia(models.Model):
     name = models.CharField(max_length=150)
     link = models.URLField()
     image = models.ImageField(verbose_name='image')
 
     def __str__(self):
         return self.name
+
 
 class Service(models.Model):
     title = models.CharField(max_length=50)
@@ -43,19 +44,28 @@ class Skills(models.Model):
     def __str__(self):
         return self.name
 
+
+class Technolgy(models.Model):
+    name = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.name
+
+
 class Language(models.Model):
     name = models.CharField(max_length=25)
     percentage = models.IntegerField()
 
     def __str__(self):
-         return self.name
+        return self.name
+
 
 class Portfolio_Category(models.Model):
     name = models.CharField(max_length=255)
 
-
     def __str__(self):
         return self.name
+
 
 class Project(models.Model):
     title = models.CharField(max_length=255)
@@ -71,6 +81,53 @@ class Project(models.Model):
     image4 = models.ImageField(verbose_name='image', upload_to='image/', blank=True, null=True)
     date_start = models.DateField(null=True, blank=True)
     date_end = models.DateField(null=True, blank=True)
+
     # status = models.
     def __str__(self):
         return self.title
+
+
+class Recommend(models.Model):
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='recommend/')
+
+    title = models.CharField(max_length=255)
+    title_ru = models.CharField(max_length=255, blank=True, null=True)
+    title_en = models.CharField(max_length=255, blank=True, null=True)
+
+    description = models.TextField()
+    description_ru = models.TextField(blank=True, null=True)
+    description_en = models.TextField(blank=True, null=True)
+
+    mark = models.IntegerField(null=True, blank=True, default=0, )
+
+    def save(self, *args, **kwargs):
+        if self.mark < 0 or self.mark > 5:  # Ensure mark is between 0 and 5
+            self.mark = 0  # or set it to a default value
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
+class Experience(models.Model):
+    position = models.CharField(max_length=233)
+    company = models.CharField(max_length=233)
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
+    body = models.TextField()
+
+    def __str__(self):
+        return self.position
+
+
+class Education(models.Model):
+    major = models.CharField(max_length=233)
+    university = models.CharField(max_length=233)
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
+    body = models.TextField()
+    diplom = models.ImageField(upload_to='diplome/', blank=True, null=True)
+
+    def __str__ww(self):
+        return self.university

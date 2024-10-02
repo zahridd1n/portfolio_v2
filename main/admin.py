@@ -1,11 +1,14 @@
 from django.contrib import admin
 from .models import AboutMe, Service, Skills, Language
+from . import models
+
+
 # Register your models here.
 
 @admin.register(AboutMe)
 class AboutMeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'full_name', 'region', 'city', 'age', 'choice')
-    list_filter = ('region', 'city', 'age', 'choice')
+    list_display = ('id', 'full_name', 'region', 'city', 'age',)
+    list_filter = ('region', 'city', 'age', )
     list_display_links = ('id', 'full_name', 'region', 'city',)
     search_fields = ('full_name', 'region', 'city')
 
@@ -17,9 +20,10 @@ class ServiceAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'title', 'title_ru', 'title_en')
     search_fields = ('title', 'title_ru', 'title_en',)
 
+
 @admin.register(Skills)
 class SkillsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name','percentage')
+    list_display = ('id', 'name', 'percentage')
     list_filter = ('name', 'percentage')
     list_display_links = ('id', 'name',)
     search_fields = ('name',)
@@ -33,3 +37,4 @@ class LanguageAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
+admin.site.register(models.Recommend)
