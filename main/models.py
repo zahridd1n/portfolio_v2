@@ -112,10 +112,17 @@ class Recommend(models.Model):
 
 class Experience(models.Model):
     position = models.CharField(max_length=233)
+    position_ru = models.CharField(max_length=100, blank=True, null=True)
+    position_en = models.CharField(max_length=100, blank=True, null=True)
+
     company = models.CharField(max_length=233)
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
+    image = models.ImageField(upload_to='Experience/', null=True, blank=True)
+
     body = models.TextField()
+    body_ru = models.TextField(blank=True, null=True)
+    body_en = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.position
@@ -123,11 +130,28 @@ class Experience(models.Model):
 
 class Education(models.Model):
     major = models.CharField(max_length=233)
+    major_ru = models.CharField(max_length=233, blank=True, null=True)
+    major_en = models.CharField(max_length=233, blank=True, null=True)
+
     university = models.CharField(max_length=233)
+    university_ru = models.CharField(max_length=233, blank=True, null=True)
+    university_en = models.CharField(max_length=233, blank=True, null=True)
+
+    body = models.TextField()
+    body_ru = models.TextField(blank=True, null=True)
+    body_en = models.TextField(blank=True, null=True)
+
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
-    body = models.TextField()
+    image = models.ImageField(upload_to='education/', blank=True, null=True)
     diplom = models.ImageField(upload_to='diplome/', blank=True, null=True)
 
-    def __str__ww(self):
+    def __str__(self):
         return self.university
+
+
+class MyStat(models.Model):
+    teach = models.IntegerField(default=0)
+    project = models.IntegerField(default=0)
+    client = models.IntegerField(default=0)
+    company = models.IntegerField(default=0)

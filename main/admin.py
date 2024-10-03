@@ -8,7 +8,7 @@ from . import models
 @admin.register(AboutMe)
 class AboutMeAdmin(admin.ModelAdmin):
     list_display = ('id', 'full_name', 'region', 'city', 'age',)
-    list_filter = ('region', 'city', 'age', )
+    list_filter = ('region', 'city', 'age',)
     list_display_links = ('id', 'full_name', 'region', 'city',)
     search_fields = ('full_name', 'region', 'city')
 
@@ -38,3 +38,6 @@ class LanguageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Recommend)
+admin.site.register(models.Education)
+admin.site.register(models.Experience)
+admin.site.register(models.MyStat)
