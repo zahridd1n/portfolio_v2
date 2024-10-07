@@ -10,6 +10,7 @@ class AboutMe(models.Model):
     phone = models.CharField(max_length=255, verbose_name='phone')
     email = models.EmailField(verbose_name='email')
     address = models.TextField(verbose_name='address', null=True, blank=True)
+    image = models.ImageField(verbose_name='image', upload_to='about/image/', null=True, blank=True)
 
     def __str__(self):
         return self.full_name
@@ -45,7 +46,7 @@ class Skills(models.Model):
         return self.name
 
 
-class Technolgy(models.Model):
+class Technology(models.Model):
     name = models.CharField(max_length=25)
 
     def __str__(self):

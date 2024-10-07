@@ -8,12 +8,39 @@ from . import models
 from . import serializers
 
 
-# ----------------------Asosiy sahifa----------------------
+def get_my_data():
+    aboutme = models.AboutMe.objects.last()
+    aboutme_sr = serializers.AboutMeSerializer(aboutme)
+    skills = models.Skills.objects.all()
+    skills_sr = serializers.SkillsSerializer(skills, many=True)
+    language = models.Language.objects.all()
+    language_sr = serializers.LanguageSerializer(language, many=True)
+    social_media = models.SocialMedia.objects.all()
+    social_media_sr = serializers.SocialMediaSerializer(social_media, many=True)
+    technology = models.Technology.objects.all()
+    technology_sr = serializers.TechnologySerializer(technology, many=True)
+
+    data = {
+        'aboutme': aboutme_sr.data,
+        'skills': skills_sr.data,
+        'language': language_sr.data,
+        'social_media': social_media_sr.data,
+        'technology': technology_sr.data,
+    }
+    return data
+
+
+# @api_view(['GET'])
+# def my_data(request):
+#     data = get_my_data()
+#     return Response(data)
+#
+
 @api_view(['GET'])
 def home_page(request):
-    services = models.Service.objects.filter()
+    services = models.Service.objects.all()
     services_sr = serializers.ServiceSerializer(services, many=True)
-    recommend = models.Recommend.objects.filter()
+    recommend = models.Recommend.objects.all()
     recommend_sr = serializers.RecommendSerializer(recommend, many=True)
     my_state = models.MyStat.objects.last()
     my_state_sr = serializers.MyStatSerializer(my_state)
@@ -21,12 +48,12 @@ def home_page(request):
     data = {
         'services': services_sr.data,
         'recommend': recommend_sr.data,
-        'my_state': my_state_sr.data
+        'my_state': my_state_sr.data,
+        'my_data': get_my_data(),  # Call the helper function directly here
     }
 
     return Response({
         'success': True,
         'message': 'success',
         'data': data
-
     })
