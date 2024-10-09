@@ -63,3 +63,22 @@ def home_page(request):
         'message': 'success',
         'data': data
     })
+
+
+
+# -----------------------------Portfolio page-----------------------------------
+
+@api_view(['GET'])
+def portfolio_page(request):
+    projects = models.Project.objects.all()
+    projects_sr = serializers.ProjectSerializer(projects, many=True)
+
+    data = {
+        'projects': projects_sr.data,
+    }
+
+    return Response({
+        'success': True,
+        'message': 'success',
+        'data': data
+    })

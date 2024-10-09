@@ -47,3 +47,8 @@ class TechnologySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Technology
         fields = '__all__'
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Project
+        fields = '__all__'
