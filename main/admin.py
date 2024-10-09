@@ -41,3 +41,9 @@ admin.site.register(models.Recommend)
 admin.site.register(models.Education)
 admin.site.register(models.Experience)
 admin.site.register(models.MyStat)
+admin.site.register(models.SocialMedia)
+admin.site.register(models.Technology)
+admin.site.register(models.Portfolio_Category)
+admin.site.register(models.Project)
+
+
