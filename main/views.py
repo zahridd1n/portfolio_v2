@@ -8,6 +8,7 @@ from . import models
 from . import serializers
 
 
+# ---------------------------MyData-------------------------------------
 def get_my_data():
     aboutme = models.AboutMe.objects.last()
     aboutme_sr = serializers.AboutMeSerializer(aboutme)
@@ -30,11 +31,17 @@ def get_my_data():
     return data
 
 
-# @api_view(['GET'])
-# def my_data(request):
-#     data = get_my_data()
-#     return Response(data)
-#
+@api_view(['GET'])
+def my_data(request):
+    data = get_my_data()
+    return Response({
+        'success': True,
+        'message': 'success',
+        'data': data
+    })
+
+
+# -----------------------------Home page-----------------------------------
 
 @api_view(['GET'])
 def home_page(request):
@@ -49,7 +56,6 @@ def home_page(request):
         'services': services_sr.data,
         'recommend': recommend_sr.data,
         'my_state': my_state_sr.data,
-        'my_data': get_my_data(),  # Call the helper function directly here
     }
 
     return Response({
