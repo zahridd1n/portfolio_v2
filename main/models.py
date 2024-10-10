@@ -17,6 +17,29 @@ class AboutMe(models.Model):
         return self.full_name
 
 
+class Banner(models.Model):
+    title = models.CharField(max_length=50)
+    title_ru = models.CharField(max_length=50, blank=True, null=True)
+    title_en = models.CharField(max_length=50, blank=True, null=True)
+
+    text1 = models.CharField(max_length=30)
+    text1_ru = models.CharField(max_length=30, blank=True, null=True)
+    text1_en = models.CharField(max_length=30, blank=True, null=True)
+    text2 = models.CharField(max_length=30)
+    text2_ru = models.CharField(max_length=30, blank=True, null=True)
+    text2_en = models.CharField(max_length=30, blank=True, null=True)
+    text3 = models.CharField(max_length=30)
+    text3_ru = models.CharField(max_length=30, blank=True, null=True)
+    text3_en = models.CharField(max_length=30, blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+
+
+
+
+
 class SocialMedia(models.Model):
     name = models.CharField(max_length=150)
     link = models.URLField()

@@ -44,15 +44,18 @@ def my_data(request):
 # -----------------------------Home page-----------------------------------
 
 @api_view(['GET'])
-def home_page(request):
+def home_page(request, lang=None):
+    banner = models.Banner.objects.last()
+    banner_sr = serializers.BannerSerializer(banner, context={'lang': lang})
     services = models.Service.objects.all()
-    services_sr = serializers.ServiceSerializer(services, many=True)
+    services_sr = serializers.ServiceSerializer(services, many=True, context={'lang': lang})
     recommend = models.Recommend.objects.all()
-    recommend_sr = serializers.RecommendSerializer(recommend, many=True)
+    recommend_sr = serializers.RecommendSerializer(recommend, many=True, context={'lang': lang})
     my_state = models.MyStat.objects.last()
     my_state_sr = serializers.MyStatSerializer(my_state)
 
     data = {
+        'banner_data': banner_sr.data,
         'services': services_sr.data,
         'recommend': recommend_sr.data,
         'my_state': my_state_sr.data,
@@ -65,11 +68,10 @@ def home_page(request):
     })
 
 
-
 # -----------------------------Portfolio page-----------------------------------
 
 @api_view(['GET'])
-def portfolio_page(request):
+def portfolio_page(request, ):
     projects = models.Project.objects.all()
     projects_sr = serializers.ProjectSerializer(projects, many=True)
 
@@ -82,6 +84,7 @@ def portfolio_page(request):
         'message': 'success',
         'data': data
     })
+
 
 # -----------------------------Portfolio detail page-----------------------------------
 
@@ -135,4 +138,3 @@ def experience_page(request):
         'message': 'success',
         'data': data
     })
-

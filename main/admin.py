@@ -45,5 +45,6 @@ admin.site.register(models.SocialMedia)
 admin.site.register(models.Technology)
 admin.site.register(models.Portfolio_Category)
 admin.site.register(models.Project)
+admin.site.register(models.Banner)
 
 
