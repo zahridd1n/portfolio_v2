@@ -52,3 +52,13 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Project
         fields = '__all__'
+
+class EducationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Education
+        fields = '__all__'
+
+class ExperienceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Experience
+        fields = '__all__'

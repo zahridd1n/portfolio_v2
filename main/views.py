@@ -99,3 +99,40 @@ def project_page(request, project_id):
         'message': 'success',
         'data': data
     })
+
+
+# -----------------------------Education page-----------------------------------
+
+@api_view(['GET'])
+def education_page(request):
+    education = models.Education.objects.all()
+    education_sr = serializers.EducationSerializer(education, many=True)
+
+    data = {
+        'education': education_sr.data,
+    }
+
+    return Response({
+        'success': True,
+        'message': 'success',
+        'data': data
+    })
+
+
+# -----------------------------Education page-----------------------------------
+
+@api_view(['GET'])
+def experience_page(request):
+    experience = models.Experience.objects.all()
+    experience_sr = serializers.ExperienceSerializer(experience, many=True)
+
+    data = {
+        'experience': experience_sr.data,
+    }
+
+    return Response({
+        'success': True,
+        'message': 'success',
+        'data': data
+    })
+

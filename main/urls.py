@@ -6,4 +6,6 @@ urlpatterns = [
   path('my_data/', views.my_data),
   path('portfolio/', views.portfolio_page),
   path('project/<int:project_id>/', views.project_page),
+  path('education_page/', views.education_page),
+  path('experience_page/', views.experience_page),
 ]
