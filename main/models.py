@@ -11,6 +11,7 @@ class AboutMe(models.Model):
     email = models.EmailField(verbose_name='email')
     address = models.TextField(verbose_name='address', null=True, blank=True)
     image = models.ImageField(verbose_name='image', upload_to='about/image/', null=True, blank=True)
+    cv_file = models.FileField(verbose_name='cv_files', upload_to='about/cv_files/', null=True, blank=True)
 
     def __str__(self):
         return self.full_name
