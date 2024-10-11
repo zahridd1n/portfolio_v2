@@ -44,6 +44,7 @@ class BannerSerializer(serializers.ModelSerializer):
         data['text3'] = getattr(instance, f"text3_{lang}", instance.text3)
         return data
 
+
 class RecommendedSocialSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RecommendedSocial
@@ -52,9 +53,10 @@ class RecommendedSocialSerializer(serializers.ModelSerializer):
 
 class RecommendSerializer(serializers.ModelSerializer):
     get_socials = RecommendedSocialSerializer(many=True, read_only=True)
+
     class Meta:
         model = models.Recommend
-        fields = ['id', 'name', 'image', 'title', 'description', 'mark','get_socials']
+        fields = ['id', 'name', 'image', 'title', 'description', 'mark', 'get_socials']
 
     def to_representation(self, instance):
         lang = self.context.get('lang', 'uz')
@@ -101,10 +103,26 @@ class TechnologySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Portfolio_Category
+        fields = '__all__'
+
+
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Project
-        fields = '__all__'
+        fields = ['title', 'description', 'category', 'image1', 'image2', 'image3', 'image4', 'date_start', 'date_end']
+
+    def to_representation(self, instance):
+        lang = self.context.get('lang', 'uz')
+        data = super().to_representation(instance)
+
+        data['title'] = getattr(instance, f"title_{lang}", instance.title)
+        data['description'] = getattr(instance, f"description_{lang}", instance.description)
+        return data
+
+
 
 
 class EducationSerializer(serializers.ModelSerializer):

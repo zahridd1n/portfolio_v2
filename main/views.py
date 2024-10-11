@@ -71,11 +71,14 @@ def home_page(request, lang=None):
 # -----------------------------Portfolio page-----------------------------------
 
 @api_view(['GET'])
-def portfolio_page(request, ):
+def portfolio_page(request, lang=None):
+    category = models.Portfolio_Category.objects.all()
+    category_sr = serializers.CategorySerializer(category, many=True)
     projects = models.Project.objects.all()
-    projects_sr = serializers.ProjectSerializer(projects, many=True)
+    projects_sr = serializers.ProjectSerializer(projects, many=True, context={'lang': lang})
 
     data = {
+        'portfolio_category': category_sr.data,
         'projects': projects_sr.data,
     }
 
