@@ -36,10 +36,6 @@ class Banner(models.Model):
         return self.title
 
 
-
-
-
-
 class SocialMedia(models.Model):
     name = models.CharField(max_length=150)
     link = models.URLField()
@@ -130,6 +126,20 @@ class Recommend(models.Model):
         if self.mark < 0 or self.mark > 5:  # Ensure mark is between 0 and 5
             self.mark = 0  # or set it to a default value
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def get_socials(self):
+        return RecommendedSocial.objects.filter(recommend=self)
+
+
+class RecommendedSocial(models.Model):
+    recommend = models.ForeignKey(Recommend, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    link = models.URLField()
+    image = models.ImageField(upload_to='recommended_social/', null=True, blank=True)
 
     def __str__(self):
         return self.name

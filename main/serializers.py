@@ -44,11 +44,17 @@ class BannerSerializer(serializers.ModelSerializer):
         data['text3'] = getattr(instance, f"text3_{lang}", instance.text3)
         return data
 
+class RecommendedSocialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RecommendedSocial
+        fields = '__all__'
+
 
 class RecommendSerializer(serializers.ModelSerializer):
+    get_socials = RecommendedSocialSerializer(many=True, read_only=True)
     class Meta:
         model = models.Recommend
-        fields = ['id', 'name', 'image', 'title', 'description', 'mark']
+        fields = ['id', 'name', 'image', 'title', 'description', 'mark','get_socials']
 
     def to_representation(self, instance):
         lang = self.context.get('lang', 'uz')
