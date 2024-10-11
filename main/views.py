@@ -92,12 +92,14 @@ def portfolio_page(request, lang=None):
 # -----------------------------Portfolio detail page-----------------------------------
 
 @api_view(['GET'])
-def project_page(request, project_id):
+def project_page(request, project_id, lang=None):
     project = get_object_or_404(models.Project, pk=project_id)
-    project_sr = serializers.ProjectSerializer(project)
-
+    project_sr = serializers.ProjectSerializer(project, context={'lang': lang})
+    my_state = models.MyStat.objects.last()
+    my_state_sr = serializers.MyStatSerializer(my_state)
     data = {
         'project': project_sr.data,
+        'my_state': my_state_sr.data,
     }
 
     return Response({
@@ -110,29 +112,13 @@ def project_page(request, project_id):
 # -----------------------------Education page-----------------------------------
 
 @api_view(['GET'])
-def education_page(request):
-    education = models.Education.objects.all()
-    education_sr = serializers.EducationSerializer(education, many=True)
-
+def education_experience(request, lang=None):
+    education = models.Education.objects.all().order_by('-start_date')
+    education_sr = serializers.EducationSerializer(education, many=True, context={'lang': lang})
+    experience = models.Experience.objects.all().order_by('-start_date')
+    experience_sr = serializers.ExperienceSerializer(experience, many=True, context={'lang': lang})
     data = {
         'education': education_sr.data,
-    }
-
-    return Response({
-        'success': True,
-        'message': 'success',
-        'data': data
-    })
-
-
-# -----------------------------Education page-----------------------------------
-
-@api_view(['GET'])
-def experience_page(request):
-    experience = models.Experience.objects.all()
-    experience_sr = serializers.ExperienceSerializer(experience, many=True)
-
-    data = {
         'experience': experience_sr.data,
     }
 

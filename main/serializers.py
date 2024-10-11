@@ -76,7 +76,7 @@ class MyStatSerializer(serializers.ModelSerializer):
 class AboutMeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AboutMe
-        fields = ['image', 'full_name', 'profession', 'region', 'city', 'age']
+        fields = ['image', 'full_name', 'profession', 'region', 'city', 'age', 'cv_file']
 
 
 class SocialMediaSerializer(serializers.ModelSerializer):
@@ -123,15 +123,42 @@ class ProjectSerializer(serializers.ModelSerializer):
         return data
 
 
-
-
 class EducationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Education
-        fields = '__all__'
+        fields = ['id', 'major', 'university', 'body', 'start_date', 'end_date', 'image', 'diplom']
+
+    def to_representation(self, instance):
+        lang = self.context.get('lang', 'uz')
+        data = super().to_representation(instance)
+
+        data['major'] = getattr(instance, f"major_{lang}", instance.major)
+        data['university'] = getattr(instance, f"university_{lang}", instance.university)
+        data['body'] = getattr(instance, f"body_{lang}", instance.body)
+        return data
 
 
 class ExperienceSerializer(serializers.ModelSerializer):
+    position = serializers.SerializerMethodField()
+    body = serializers.SerializerMethodField()
     class Meta:
         model = models.Experience
-        fields = '__all__'
+        fields = ['id', 'company', 'image', 'position', 'body', 'start_date', 'end_date']
+
+    def get_position(self, obj):
+        lang = self.context.get('lang', 'uz')
+        if lang == 'en':
+            return obj.position_en
+        elif lang == 'ru':
+            return obj.position_ru
+        else:
+            return obj.position
+
+    def get_body(self, obj):
+        lang = self.context.get('lang', 'uz')
+        if lang == 'en':
+            return obj.body_en
+        elif lang == 'ru':
+            return obj.body_ru
+        else:
+            return obj.body
