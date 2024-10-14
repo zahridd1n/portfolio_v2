@@ -5,11 +5,11 @@ class AboutMe(models.Model):
     full_name = models.CharField(max_length=50, verbose_name='fullname')
     region = models.CharField(max_length=255, verbose_name='region')
     city = models.CharField(max_length=255, verbose_name='city')
+    address = models.CharField(max_length=255,verbose_name='address', null=True, blank=True)
     age = models.IntegerField(verbose_name='age')
     profession = models.CharField(max_length=122, verbose_name='profession')
     phone = models.CharField(max_length=255, verbose_name='phone')
     email = models.EmailField(verbose_name='email')
-    address = models.TextField(verbose_name='address', null=True, blank=True)
     image = models.ImageField(verbose_name='image', upload_to='about/image/', null=True, blank=True)
     cv_file = models.FileField(verbose_name='cv_files', upload_to='about/cv_files/', null=True, blank=True)
 

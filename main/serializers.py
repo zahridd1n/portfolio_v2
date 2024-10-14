@@ -141,6 +141,7 @@ class EducationSerializer(serializers.ModelSerializer):
 class ExperienceSerializer(serializers.ModelSerializer):
     position = serializers.SerializerMethodField()
     body = serializers.SerializerMethodField()
+
     class Meta:
         model = models.Experience
         fields = ['id', 'company', 'image', 'position', 'body', 'start_date', 'end_date']
@@ -162,3 +163,9 @@ class ExperienceSerializer(serializers.ModelSerializer):
             return obj.body_ru
         else:
             return obj.body
+
+
+class ContactDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.AboutMe
+        fields = ['region', 'city', 'address', 'email', 'phone']

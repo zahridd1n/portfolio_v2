@@ -15,4 +15,6 @@ urlpatterns = [
 
   path('history/<str:lang>/', views.education_experience),
   path('history/', views.education_experience),
+
+  path('contact/', views.contact_page)
 ]

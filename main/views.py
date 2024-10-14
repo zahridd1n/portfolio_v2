@@ -127,3 +127,20 @@ def education_experience(request, lang=None):
         'message': 'success',
         'data': data
     })
+
+
+# -----------------------------Contact--------------------------------
+@api_view(['GET'])
+def contact_page(request, lang=None):
+    contact_data = models.AboutMe.objects.last()
+    contact_data_sr = serializers.ContactDataSerializer(contact_data, context={'lang': lang})
+
+    data = {
+        'contact_data': contact_data_sr.data,
+    }
+
+    return Response({
+        'success': True,
+        'message': 'success',
+        'data': data
+    })
