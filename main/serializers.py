@@ -112,7 +112,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Project
-        fields = ['title', 'description', 'category', 'image1', 'image2', 'image3', 'image4', 'date_start', 'date_end']
+        fields = ['id','title', 'description', 'category', 'image1', 'image2', 'image3', 'image4', 'date_start', 'date_end']
 
     def to_representation(self, instance):
         lang = self.context.get('lang', 'uz')

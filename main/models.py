@@ -190,3 +190,4 @@ class MyStat(models.Model):
     project = models.IntegerField(default=0)
     client = models.IntegerField(default=0)
     company = models.IntegerField(default=0)
+
