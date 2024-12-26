@@ -9,8 +9,8 @@ from . import serializers
 
 
 # ---------------------------MyData-------------------------------------
-def get_my_data():
-    aboutme = models.AboutMe.objects.last()
+def get_my_data(username):
+    aboutme = models.AboutMe.objects.get(user__username=username)
     aboutme_sr = serializers.AboutMeSerializer(aboutme)
     skills = models.Skills.objects.all()
     skills_sr = serializers.SkillsSerializer(skills, many=True)
@@ -32,8 +32,8 @@ def get_my_data():
 
 
 @api_view(['GET'])
-def my_data(request):
-    data = get_my_data()
+def my_data(request, username):
+    data = get_my_data(username)
     return Response({
         'success': True,
         'message': 'success',

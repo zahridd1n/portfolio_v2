@@ -1,11 +1,19 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class AboutMe(models.Model):
+class UserAdd(models.Model):
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        abstract = True
+
+
+class AboutMe(UserAdd):
     full_name = models.CharField(max_length=50, verbose_name='fullname')
     region = models.CharField(max_length=255, verbose_name='region')
     city = models.CharField(max_length=255, verbose_name='city')
-    address = models.CharField(max_length=255,verbose_name='address', null=True, blank=True)
+    address = models.CharField(max_length=255, verbose_name='address', null=True, blank=True)
     age = models.IntegerField(verbose_name='age')
     profession = models.CharField(max_length=122, verbose_name='profession')
     phone = models.CharField(max_length=255, verbose_name='phone')
@@ -17,7 +25,7 @@ class AboutMe(models.Model):
         return self.full_name
 
 
-class Banner(models.Model):
+class Banner(UserAdd):
     title = models.CharField(max_length=50)
     title_ru = models.CharField(max_length=50, blank=True, null=True)
     title_en = models.CharField(max_length=50, blank=True, null=True)
@@ -36,7 +44,7 @@ class Banner(models.Model):
         return self.title
 
 
-class SocialMedia(models.Model):
+class SocialMedia(UserAdd):
     name = models.CharField(max_length=150)
     link = models.URLField()
     image = models.ImageField(verbose_name='image')
@@ -45,7 +53,7 @@ class SocialMedia(models.Model):
         return self.name
 
 
-class Service(models.Model):
+class Service(UserAdd):
     title = models.CharField(max_length=50)
     title_ru = models.CharField(max_length=50, blank=True, null=True)
     title_en = models.CharField(max_length=50, blank=True, null=True)
@@ -58,7 +66,7 @@ class Service(models.Model):
         return self.title
 
 
-class Skills(models.Model):
+class Skills(UserAdd):
     name = models.CharField(max_length=25)
     percentage = models.FloatField(default=0)
 
@@ -66,14 +74,14 @@ class Skills(models.Model):
         return self.name
 
 
-class Technology(models.Model):
+class Technology(UserAdd):
     name = models.CharField(max_length=25)
 
     def __str__(self):
         return self.name
 
 
-class Language(models.Model):
+class Language(UserAdd):
     name = models.CharField(max_length=25)
     percentage = models.IntegerField()
 
@@ -81,14 +89,14 @@ class Language(models.Model):
         return self.name
 
 
-class Portfolio_Category(models.Model):
+class Portfolio_Category(UserAdd):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
 
 
-class Project(models.Model):
+class Project(UserAdd):
     title = models.CharField(max_length=255)
     title_ru = models.CharField(max_length=255, blank=True, null=True)
     title_en = models.CharField(max_length=255, blank=True, null=True)
@@ -108,7 +116,7 @@ class Project(models.Model):
         return self.title
 
 
-class Recommend(models.Model):
+class Recommend(UserAdd):
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='recommend/')
 
@@ -135,7 +143,7 @@ class Recommend(models.Model):
         return RecommendedSocial.objects.filter(recommend=self)
 
 
-class RecommendedSocial(models.Model):
+class RecommendedSocial(UserAdd):
     recommend = models.ForeignKey(Recommend, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     link = models.URLField()
@@ -145,7 +153,7 @@ class RecommendedSocial(models.Model):
         return self.name
 
 
-class Experience(models.Model):
+class Experience(UserAdd):
     position = models.CharField(max_length=233)
     position_ru = models.CharField(max_length=100, blank=True, null=True)
     position_en = models.CharField(max_length=100, blank=True, null=True)
@@ -163,7 +171,7 @@ class Experience(models.Model):
         return self.position
 
 
-class Education(models.Model):
+class Education(UserAdd):
     major = models.CharField(max_length=233)
     major_ru = models.CharField(max_length=233, blank=True, null=True)
     major_en = models.CharField(max_length=233, blank=True, null=True)
@@ -185,9 +193,8 @@ class Education(models.Model):
         return self.university
 
 
-class MyStat(models.Model):
+class MyStat(UserAdd):
     teach = models.IntegerField(default=0)
     project = models.IntegerField(default=0)
     client = models.IntegerField(default=0)
     company = models.IntegerField(default=0)
-
