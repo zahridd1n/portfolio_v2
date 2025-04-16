@@ -1,9 +1,18 @@
 from django.contrib import admin
 from .models import AboutMe, Service, Skills, Language
 from . import models
+from ai.models import Price, Generated
+from unfold.admin import ModelAdmin
 
 
-# Register your models here.
+@admin.register(Price)
+class PriceAdmin(ModelAdmin):
+    list_display = ('id', 'name', 'price')
+
+@admin.register(Generated)
+class GeneratedAdmin(ModelAdmin):
+    list_display = ('id', 'prompt', 'video_url')
+
 
 @admin.register(AboutMe)
 class AboutMeAdmin(admin.ModelAdmin):
@@ -47,5 +56,3 @@ admin.site.register(models.Portfolio_Category)
 admin.site.register(models.Project)
 admin.site.register(models.Banner)
 admin.site.register(models.RecommendedSocial)
-
-

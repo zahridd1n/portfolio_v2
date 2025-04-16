@@ -14,10 +14,18 @@ SECRET_KEY = 'django-insecure-n)%vc@pvnrsuoz+=h2&8z+11l1rlm-c$y97_nh09l7$aqj&w(a
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+"ai"
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    "unfold",  # before django.contrib.admin
+    "unfold.contrib.filters",  # optional, if special filters are needed
+    "unfold.contrib.forms",  # optional, if special form elements are needed
+    "unfold.contrib.inlines",  # optional, if special inlines are needed
+    "unfold.contrib.import_export",  # optional, if django-import-export package is used
+    "unfold.contrib.guardian",  # optional, if django-guardian package is used
+    "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
+    "django.contrib.admin",  # required
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -27,6 +35,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'main',
     'drf_yasg',
+    "ai",
+    'rest_framework.authtoken',
+
 ]
 
 MIDDLEWARE = [
@@ -41,9 +52,18 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',  # Swagger uchun
+    ],
+}
+
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'core.urls'
+AUTH_USER_MODEL = 'ai.User'
 
 TEMPLATES = [
     {
