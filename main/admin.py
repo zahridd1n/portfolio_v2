@@ -3,11 +3,17 @@ from .models import AboutMe, Service, Skills, Language
 from . import models
 from ai.models import Price, Generated
 from unfold.admin import ModelAdmin
+from unfold.contrib.forms.widgets import WysiwygWidget
 
 
 @admin.register(Price)
 class PriceAdmin(ModelAdmin):
     list_display = ('id', 'name', 'price')
+    formfield_overrides = {
+        models.TextField: {
+            "widget": WysiwygWidget,
+        }
+    }
 
 @admin.register(Generated)
 class GeneratedAdmin(ModelAdmin):
