@@ -4,13 +4,14 @@ from . import models
 from ai.models import Price, Generated
 from unfold.admin import ModelAdmin
 from unfold.contrib.forms.widgets import WysiwygWidget
+from django.db import models as md
 
 
 @admin.register(Price)
 class PriceAdmin(ModelAdmin):
     list_display = ('id', 'name', 'price')
     formfield_overrides = {
-        models.TextField: {
+        md.TextField: {
             "widget": WysiwygWidget,
         }
     }
